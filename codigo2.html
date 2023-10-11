@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            height: 100vh;
+        }
+        .ball{
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .wall{
+            width: 50px;
+            height: 150px;
+            background-color: black;
+            position: absolute;
+        }
+        .visor{
+            width: 150px;
+            height: 50px;
+            background-color: rgba(234, 234, 234, 0.871);
+            position: relative;
+            left: 50%;
+            bottom: 5%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container"></div>
+    <script>
+        const container= document.querySelector(".container");
+        const ballElement= document.createElement("div");
+        ballElement.classList.add("ball");
+        const wallElement= document.createElement("div");
+        const visor= document.createElement("div");
+        visor.classList.add("visor");
+        wallElement.classList.add("wall");
+        const ballData= {
+            x: 100,
+            y: 100,
+            dx: 1,
+            dy: 1,
+        }
+        const wallData= {
+            x: 400,
+            y: 500,
+        }
+        function createScene(){
+            function distance(p1,p2){
+                return Math.sqrt(Math.pow(p1.x-p2.x,2)+Math.pow(p1.y-p2.y,2));
+            }
+            ballElement.style.cssText= `
+                top: ${ballData.y+=10*ballData.dy}px;
+                left: ${ballData.x+=ballData.dx}px;
+            `;
+            wallElement.style.cssText= `
+                top: ${wallData.y}px;
+                left: ${wallData.x}px;
+            `;
+            if(distance(ballData,wallData)<100){
+                ballData.dx*=-1;
+                ballData.dy*=-1;
+            }
+            if(ballData.x>container.clientWidth-50||ballData.x<0){
+                ballData.dx*=-1;
+            }
+            if(ballData.y>container.clientHeight-50||ballData.y<0){
+                ballData.dy*=-1;
+            }
+            visor.textContent=Math.round(distance(ballData,wallData),4).toString();
+            container.appendChild(ballElement);
+            container.appendChild(wallElement);
+            container.appendChild(visor);
+            requestAnimationFrame(createScene);
+        }
+        createScene();
+    </script>
+</body>
+</html>

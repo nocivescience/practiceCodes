@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+
+</style>
+<body>
+    <div id="container">
+        <input type="number" id="entrada">
+        <section>
+            <main id="ventana"></main>
+            <button onclick="mostrar()">Mostrar</button>
+        </section>
+    </div>
+    <script>
+        const entrada= document.getElementById("entrada");
+        const ventana= document.getElementById("ventana");
+        const slow=(number,diference)=>{
+            if(Math.abs(number)<diference) return 0;
+            return number+diference;
+        }
+        function mostrar(){
+            const valor=slow(parseFloat(entrada.value),100);
+            ventana.innerHTML=valor;
+        }
+    </script>
+</body>
+</html>
