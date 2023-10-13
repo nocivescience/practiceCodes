@@ -215,6 +215,18 @@ const walls = [
   length: wall.length * (pathW + wallW)
 }));
 
+// visor
+const visorEl= document.getElementById("visor");
+function visor(elementoX, elementoY){
+  visorEl.innerHTML=`
+    mouseStartX: ${elementoX}<br>
+    mouseStartY: ${elementoY}<br>
+    minmaxX: ${Math.minmax(elementoX, 15)}<br>
+    minmaxY: ${Math.minmax(elementoY, 15)}<br>
+  `;
+  // requestAnimationFrame(visor);
+}
+
 // Draw walls
 walls.forEach(({ x, y, horizontal, length }) => {
   const wall = document.createElement("div");
@@ -262,6 +274,8 @@ window.addEventListener("mousemove", function (event) {
   if (gameInProgress) {
     const mouseDeltaX = -Math.minmax(mouseStartX - event.clientX, 15);
     const mouseDeltaY = -Math.minmax(mouseStartY - event.clientY, 15);
+
+    visor(mouseDeltaX, mouseDeltaY);
 
     joystickHeadElement.style.cssText = `
         left: ${mouseDeltaX}px;
